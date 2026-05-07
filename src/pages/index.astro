@@ -1,0 +1,177 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Sidebar from '../components/Sidebar.astro';
+import { experiences } from '../data/experience';
+import { skillCategories } from '../data/skills';
+import { projects } from '../data/projects';
+import { ExternalLink, ArrowRight } from 'lucide-astro';
+---
+
+<BaseLayout title="Ha Dinh Kien | Portfolio">
+  <div class="min-h-screen">
+    <Sidebar />
+    <main class="min-h-screen md:pl-[280px]">
+
+        <!-- Section: About -->
+        <section id="about" data-section="about" class="content-section py-10 px-8 md:px-12 max-w-4xl mx-auto">
+            <h2 class="text-[28px] font-[800] text-white tracking-tight mb-6" data-reveal>
+                Hey, I'm Kien.
+            </h2>
+
+            <p class="text-[#A1A1AA] leading-[1.8] text-[15px] mb-12 max-w-2xl" data-reveal data-delay="50">
+                Full Stack Engineer focused on building scalable SaaS products, real-time systems, and AI-driven platforms.
+                Currently at CT UAV, where I develop distributed drone monitoring and swarm control systems with real-time communication architectures.
+                Previously at CHEK JSC, I helped build a multi-tenant business ecosystem from the ground up, covering backend infrastructure, frontend applications, and cloud deployment workflows.
+                <br /><br />
+                I enjoy designing reliable systems, optimizing developer workflows, and turning complex technical problems into clean, maintainable products.
+            </p>
+        </section>
+
+      <hr class="section-divider" />
+
+      <!-- Section: Experience -->
+      <section id="experience" data-section="experience" class="content-section py-10 px-8 md:px-12 max-w-4xl mx-auto">
+        <div class="flex items-center gap-4 mb-12" data-reveal>
+          <span class="text-[12px] font-semibold text-[var(--accent)] tracking-[0.2em]">Experience</span>
+          <span class="h-px flex-1 bg-[rgba(255,255,255,0.08)]"></span>
+        </div>
+        
+        <div class="space-y-12 border-l border-[rgba(255,255,255,0.08)] ml-1">
+          {experiences.map((exp, index) => (
+            <div class="relative pl-6" data-reveal data-delay={index * 50}>
+              <div class={`absolute left-[-5px] top-[6px] w-[9px] h-[9px] rounded-full ${exp.isCurrent ? 'bg-[var(--accent)] shadow-[0_0_0_3px_rgba(59,130,246,0.2)]' : 'bg-[var(--muted-2)] border-2 border-[var(--bg)]'}`}></div>
+              
+              <div class="text-[11px] text-[var(--muted-2)] font-mono mb-2">{exp.startDate} — {exp.endDate}</div>
+              <h4 class="text-[16px] text-white font-[700] mb-1 flex items-center gap-2">
+                {exp.role} 
+                {exp.isCurrent && <span class="w-1.5 h-1.5 rounded-full bg-[#22c55e]"></span>}
+              </h4>
+              <div class="text-[13px] text-[var(--accent)] opacity-90 mb-4">{exp.company}</div>
+              
+              <p class="text-[13px] text-[#A1A1AA] leading-[1.7] mb-4 max-w-2xl">{exp.description}</p>
+              
+              <ul class="text-[12px] text-[#A1A1AA] space-y-2 mb-6 ml-4 list-disc marker:text-[var(--border-hover)]">
+                {exp.highlights.map(hl => (
+                  <li class="pl-1 leading-relaxed">{hl}</li>
+                ))}
+              </ul>
+
+              <div class="flex flex-wrap gap-2">
+                {exp.techStack.map(tech => (
+                  <span class="font-mono text-[10px] bg-[rgba(59,130,246,0.08)] border border-[rgba(59,130,246,0.2)] text-[var(--accent)] rounded px-2 py-0.5">
+                    {tech}
+                  </span>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <hr class="section-divider" />
+
+      <!-- Section: Projects -->
+      <section id="projects" data-section="projects" class="content-section py-10 px-8 md:px-12 max-w-4xl mx-auto">
+        <div class="flex items-center gap-4 mb-12" data-reveal>
+          <span class="text-[12px] font-semibold text-[var(--accent)] tracking-[0.2em]">Projects</span>
+          <span class="h-px flex-1 bg-[rgba(255,255,255,0.08)]"></span>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {projects.map((project, index) => (
+            <div 
+              class={`group relative bg-[rgba(255,255,255,0.02)] border-[0.5px] border-[rgba(255,255,255,0.07)] rounded-[10px] p-6 hover:border-[rgba(255,255,255,0.15)] hover:bg-[rgba(255,255,255,0.04)] transition-all duration-200 ${index < 2 ? 'border-t-[1px] border-t-[#3B82F6]' : 'border-t-[1px] border-t-[rgba(255,255,255,0.1)]'}`}
+              data-reveal data-delay={index * 50}
+            >
+              <div class="flex justify-between items-start mb-4">
+                <h4 class="text-white font-[600] text-[15px] group-hover:text-[var(--accent)] transition-colors">{project.title}</h4>
+                {(project.githubUrl || project.demoUrl) && (
+                  <ExternalLink size={14} class="text-[var(--muted)] group-hover:text-white transition-colors" />
+                )}
+              </div>
+              <p class="text-[13px] text-[#A1A1AA] leading-[1.6] mb-6">{project.description}</p>
+              
+              <div class="flex flex-wrap gap-2 mt-auto">
+                {project.techStack.map(tech => (
+                  <span class="font-mono text-[10px] bg-[var(--bg-surface)] border border-[var(--border)] text-[var(--muted)] rounded px-2 py-0.5 group-hover:border-[rgba(255,255,255,0.15)] transition-colors">
+                    {tech}
+                  </span>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <hr class="section-divider" />
+
+      <!-- Section: Skills -->
+      <section id="skills" data-section="skills" class="content-section py-10 px-8 md:px-12 max-w-4xl mx-auto">
+        <div class="flex items-center gap-4 mb-12" data-reveal>
+          <span class="text-[12px] font-semibold text-[var(--accent)] tracking-[0.2em]">Skills</span>
+          <span class="h-px flex-1 bg-[rgba(255,255,255,0.08)]"></span>
+        </div>
+
+        <div class="space-y-10">
+          {skillCategories.map((category, index) => (
+            <div class="grid md:grid-cols-[180px_1fr] gap-4 items-start" data-reveal data-delay={index * 50}>
+              <div class="text-[11px] uppercase tracking-widest text-[var(--muted-2)] font-semibold mt-1">
+                {category.category}
+              </div>
+
+              <div class="flex flex-wrap gap-2">
+                {category.skills.map(skill => (
+                  <span class="border border-[rgba(255,255,255,0.1)] rounded px-2.5 py-1 text-[12px] text-[var(--muted)] hover:border-[rgba(59,130,246,0.4)] hover:text-[#E4E4E7] transition-all duration-150 cursor-default">
+                    {skill}
+                  </span>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <hr class="section-divider" />
+
+      <!-- Section: Education -->
+      <section id="education" data-section="education" class="content-section py-10 px-8 md:px-12 max-w-4xl mx-auto">
+        <div class="flex items-center gap-4 mb-12" data-reveal>
+          <span class="text-[12px] font-semibold text-[var(--accent)] tracking-[0.2em]">Education</span>
+          <span class="h-px flex-1 bg-[rgba(255,255,255,0.08)]"></span>
+        </div>
+        
+        <div class="grid md:grid-cols-2 gap-8">
+          <div class="bg-[rgba(255,255,255,0.02)] border-[0.5px] border-[rgba(255,255,255,0.07)] rounded-[10px] p-6" data-reveal>
+            <div class="text-[11px] text-[var(--muted-2)] font-mono mb-2">Sep 2021 — Jun 2025</div>
+            <h4 class="text-white font-[600] text-[15px] mb-1">VNU-HCM University of Information Technology</h4>
+            <div class="text-[13px] text-[var(--accent)] opacity-90 mb-4">Bachelor of Information Technology</div>
+            
+            <div class="inline-flex items-center gap-2 bg-[var(--bg-surface)] border border-[var(--border)] rounded px-3 py-1 mb-4">
+              <span class="text-[12px] text-[#A1A1AA]">GPA 8.38 / 10.0</span>
+            </div>
+            
+            <div>
+              <div class="text-[11px] uppercase tracking-widest text-[var(--muted-2)] font-semibold mb-3">Coursework</div>
+              <div class="flex flex-wrap gap-2">
+                {['Operating Systems', 'Computer Networks', 'Data Structures & Algorithms', 'OOP', 'Web Development', 'Computer Systems'].map(course => (
+                  <span class="font-mono text-[10px] bg-[var(--bg-surface)] border border-[var(--border)] text-[#A1A1AA] rounded px-2 py-0.5">{course}</span>
+                ))}
+              </div>
+            </div>
+          </div>
+          
+          <div class="bg-[rgba(255,255,255,0.02)] border-[0.5px] border-[rgba(255,255,255,0.07)] rounded-[10px] p-6" data-reveal data-delay="50">
+            <div class="text-[11px] text-[var(--muted-2)] font-mono mb-2">English Proficiency</div>
+            <h4 class="text-white font-[600] text-[15px] mb-1">TOEIC Certificate</h4>
+            
+            <div class="space-y-2 mt-4 text-[13px] text-[#A1A1AA]">
+              <div class="flex justify-between border-b border-[var(--border)] pb-2"><span>Listening & Reading:</span> <span class="text-white font-medium">770</span></div>
+              <div class="flex justify-between pt-1"><span>Speaking & Writing:</span> <span class="text-white font-medium">250</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+</BaseLayout>
+
