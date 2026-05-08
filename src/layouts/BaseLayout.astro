@@ -32,15 +32,17 @@ const { title, description = "Ha Dinh Kien - Junior Full Stack Engineer Portfoli
         initScrollSpy();
         initMobileMenu();
 
-        const glow = document.querySelector('.cursor-glow');
+        const glow = document.querySelector<HTMLElement>('.cursor-glow');
         if (glow) {
-          const moveGlow = (point) => {
+          const moveGlow = (point: { clientX: number; clientY: number }) => {
             glow.style.left = `${point.clientX}px`;
             glow.style.top = `${point.clientY}px`;
           };
 
-          window.addEventListener('mousemove', moveGlow);
-          window.addEventListener('touchmove', (event) => {
+          window.addEventListener('mousemove', (event: MouseEvent) => {
+            moveGlow(event);
+          });
+          window.addEventListener('touchmove', (event: TouchEvent) => {
             if (event.touches && event.touches[0]) {
               moveGlow(event.touches[0]);
             }
