@@ -12,37 +12,36 @@ export interface ExperienceEntry {
 export const experiences: ExperienceEntry[] = [
   {
     company: "CT UAV",
-    role: "Junior Fullstack Engineer",
+    role: "Junior Full-Stack Engineer",
     startDate: "Jan 2026",
     endDate: "Present",
     isCurrent: true,
-    description: "Architecting backend systems for large-scale swarm UAV control and internal ERP tooling.",
+    description: "Building backend services and internal tooling for UAV fleet monitoring, swarm coordination, and operational workflows.",
     highlights: [
-      "Built async FastAPI gateway to coordinate drone swarms and bridge MAVLink telemetry",
-      "Developed dual-layer comms: WebSockets for high-frequency data, MQTT for low-bandwidth messaging",
-      "Implemented Carbon Metrics visualization with geospatial data in MongoDB + .pmtiles on MapLibre",
-      "Integrated AI-powered fire detection from real-time UAV video streams",
-      "Containerized full ecosystem with Docker for consistent dev/prod environments",
-      "Built custom Agile ERP module in ERPNext with Sprint/Backlog automation and Kanban dashboard"
+      "Built an asynchronous FastAPI gateway to coordinate UAV swarms and bridge MAVLink telemetry",
+      "Designed a dual-layer communication model using WebSockets for live telemetry and MQTT for low-bandwidth messaging",
+      "Implemented geospatial carbon-metrics visualization with MongoDB, .pmtiles, and MapLibre",
+      "Integrated AI-assisted fire detection from real-time UAV video streams",
+      "Containerized the application ecosystem with Docker to keep development and production environments consistent",
+      "Built a custom Agile ERPNext module with sprint, backlog, and Kanban workflow automation"
     ],
     techStack: ["FastAPI", "WebSockets", "MQTT", "MongoDB", "MapLibre", "Docker", "MAVLink", "ERPNext", "Frappe", "Python", "JavaScript"]
   },
   {
     company: "CHEK JSC",
-    role: "Fullstack Developer",
+    role: "Full-Stack Developer",
     startDate: "Oct 2024",
     endDate: "Dec 2025",
     isCurrent: false,
-    description: "Built and maintained a multi-tenant SaaS platform unifying CRM, CDP, loyalty programs, and workspace tools for SMEs.",
+    description: "Built and maintained a multi-tenant SaaS platform that connected CRM, CDP, loyalty, payments, and workspace tools for SMEs.",
     highlights: [
-      "Developed QR Code generation service following Napas VietQR standard",
-      "Built scalable Drive Service on AWS S3 and Cloudflare R2 with access control",
+      "Developed a QR-code payment service aligned with the Napas VietQR standard",
+      "Built a scalable drive service on AWS S3 and Cloudflare R2 with tenant-aware access control",
       "Integrated Cloudflare Turnstile for bot protection and user verification",
-      "Integrated Sentry for error monitoring and system observability",
-      "Implemented electronic signature feature for secure document workflows",
-      "Collaborated in Agile Scrum team with iterative delivery"
+      "Added Sentry monitoring to improve error visibility and production debugging",
+      "Implemented electronic signatures for secure document workflows",
+      "Collaborated in an Agile Scrum team to ship features through iterative releases"
     ],
     techStack: ["Django", "Next.js", "AWS S3", "Cloudflare R2", "Cloudflare Turnstile", "Temporal", "Sentry", "PostgreSQL"]
   }
 ];
-
