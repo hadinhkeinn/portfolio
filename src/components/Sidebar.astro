@@ -4,8 +4,10 @@ import { Github, Linkedin, Mail, Menu } from 'lucide-astro';
 <!-- Mobile Menu Toggle Button -->
 <button
     id="mobile-menu-toggle"
-    class="md:hidden fixed top-4 right-4 z-50 p-2 glass-panel rounded-md text-white"
-    aria-label="Toggle menu"
+    class="mobile-menu-button md:hidden"
+    aria-label="Open navigation menu"
+    aria-controls="sidebar"
+    aria-expanded="false"
 >
   <Menu size={20} />
 </button>
@@ -18,73 +20,83 @@ import { Github, Linkedin, Mail, Menu } from 'lucide-astro';
 
 <aside
     id="sidebar"
-    class="fixed inset-y-0 left-0 z-40 w-[280px] glass-panel p-8 flex flex-col h-screen overflow-y-auto transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out"
+    class="portfolio-sidebar glass-panel"
 >
   <!-- Subtle inner glow on sidebar edge -->
-  <div class="pointer-events-none absolute inset-y-0 right-0 w-px bg-gradient-to-b from-transparent via-[rgba(162,201,255,0.2)] to-transparent"></div>
+  <div class="sidebar-edge" aria-hidden="true"></div>
 
   <!-- 1. Identity block -->
-  <div class="mb-8">
-    <div class="w-14 h-14 rounded-full bg-[rgba(162,201,255,0.12)] border border-[rgba(162,201,255,0.35)] flex items-center justify-center text-[var(--accent)] font-bold mb-4 shadow-[0_0_22px_rgba(162,201,255,0.25),inset_0_0_12px_rgba(162,201,255,0.1)]">
-      HK
-    </div>
-    <h1 class="text-[17px] font-[800] tracking-tight text-white mb-1">Ha Dinh Kien</h1>
-    <h2 class="text-[12px] text-[var(--accent)] mb-2 tracking-wide" style="text-shadow: 0 0 16px rgba(162,201,255,0.55)">Full Stack Engineer</h2>
-    <div class="flex items-center gap-1.5 text-[11px] text-[var(--muted)]">
-      <span class="w-1.5 h-1.5 rounded-full bg-[var(--muted-2)]"></span>
-      Ho Chi Minh City
-    </div>
-  </div>
-
-  <div class="h-px w-full bg-gradient-to-r from-transparent via-[rgba(255,255,255,0.12)] to-transparent mb-6"></div>
-
-  <!-- 2. Navigation -->
-  <nav class="mb-auto">
-    <ul class="space-y-1">
-      {[
-        { id: 'about',      label: 'About' },
-        { id: 'experience', label: 'Experience' },
-        { id: 'projects',   label: 'Projects' },
-        { id: 'skills',     label: 'Skills' },
-        { id: 'education',  label: 'Education' },
-      ].map(item => (
-          <li>
-            <a
-                href={`#${item.id}`}
-                data-nav={item.id}
-                class="sidebar-close group nav-item flex items-center gap-3 py-2.5 px-3 rounded-lg text-[13px] text-[var(--muted)] hover:text-white hover:bg-[var(--bg-hover)] transition-all duration-150 relative"
-            >
-              <span class="label-text tracking-wide">{item.label}</span>
-            </a>
-          </li>
-      ))}
-    </ul>
-  </nav>
-
-  <!-- 3. Social links -->
-  <div class="mt-6 mb-6">
-    <div class="text-[10px] uppercase tracking-[0.3em] text-[var(--muted-2)] mb-3">Connect</div>
-    <div class="grid grid-cols-4 gap-2">
-      {[
-        { href: "mailto:hadinhkienn@gmail.com",       icon: Mail,     label: "Email" },
-        { href: "https://linkedin.com/in/hadinhkienn", icon: Linkedin, label: "LinkedIn" },
-        { href: "https://github.com/hadinhkeinn",      icon: Github,   label: "GitHub" },
-      ].map(link => (
-          <a
-              href={link.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={link.label}
-              class="social-icon h-10 flex items-center justify-center rounded-md border border-white/10 bg-[rgba(255,255,255,0.04)] text-[var(--muted)] hover:text-[var(--accent)] hover:border-[rgba(162,201,255,0.4)] hover:bg-[rgba(162,201,255,0.08)] transition-all"
-          >
-            <link.icon size={16} />
-          </a>
-      ))}
+  <div class="sidebar-identity">
+    <img
+        src="/avt.png"
+        alt="Ha Dinh Kien"
+        width="60"
+        height="60"
+        class="avatar-mark"
+    />
+    <div class="sidebar-profile-copy">
+      <p class="sidebar-name">Ha Dinh Kien</p>
+      <p class="sidebar-role">Full-Stack Engineer</p>
+      <div class="sidebar-location">
+        <span aria-hidden="true"></span>
+        Ho Chi Minh City
+      </div>
     </div>
   </div>
 
-  <!-- Copyright -->
-  <div class="text-[10px] text-[var(--muted-2)] opacity-60 mt-4">
-    © 2026 Ha Dinh Kien
+  <div class="sidebar-divider" aria-hidden="true"></div>
+
+  <div class="sidebar-main">
+    <!-- 2. Navigation -->
+    <nav aria-label="Primary navigation">
+      <ul class="sidebar-nav-list">
+        {[
+          { id: 'about',      label: 'About' },
+          { id: 'experience', label: 'Experience' },
+          { id: 'projects',   label: 'Projects' },
+          { id: 'skills',     label: 'Skills' },
+          { id: 'education',  label: 'Education' },
+        ].map(item => (
+            <li>
+              <a
+                  href={`#${item.id}`}
+                  data-nav={item.id}
+                  class="sidebar-close nav-item"
+              >
+                <span class="label-text">{item.label}</span>
+              </a>
+            </li>
+        ))}
+      </ul>
+    </nav>
+
+    <!-- 3. Social links -->
+    <div class="sidebar-bottom">
+      <div class="sidebar-connect">
+        <div class="sidebar-label">Connect</div>
+        <div class="social-grid">
+          {[
+            { href: "mailto:hadinhkienn@gmail.com",       icon: Mail,     label: "Email" },
+            { href: "https://linkedin.com/in/hadinhkienn", icon: Linkedin, label: "LinkedIn" },
+            { href: "https://github.com/hadinhkeinn",      icon: Github,   label: "GitHub" },
+          ].map(link => (
+              <a
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={link.label}
+                  class="social-icon"
+              >
+                <link.icon size={16} />
+              </a>
+          ))}
+        </div>
+      </div>
+
+      <!-- Copyright -->
+      <div class="sidebar-footnote">
+        © 2026 Ha Dinh Kien
+      </div>
+    </div>
   </div>
 </aside>

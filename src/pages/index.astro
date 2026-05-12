@@ -4,77 +4,91 @@ import Sidebar from '../components/Sidebar.astro';
 import { experiences } from '../data/experience';
 import { skillCategories } from '../data/skills';
 import { projects } from '../data/projects';
-import { ExternalLink } from 'lucide-astro';
+import { ArrowRight, ExternalLink, Mail } from 'lucide-astro';
 ---
 
-<BaseLayout title="Ha Dinh Kien | Portfolio">
+<BaseLayout
+  title="Ha Dinh Kien | Full-Stack Software Engineer"
+  description="Portfolio of Ha Dinh Kien, a full-stack software engineer in Ho Chi Minh City building scalable SaaS products, real-time systems, and AI-enabled web platforms."
+>
   <div class="min-h-screen">
     <Sidebar />
-    <main class="min-h-screen md:pl-70 pb-16">
+    <main class="site-main min-h-screen md:pl-70 pb-16">
 
       <!-- ─── Section: About ───────────────────────────── -->
-      <section id="about" data-section="about" class="content-section pt-16 pb-12 px-6 md:px-14 max-w-5xl mx-auto">
-        <div class="flex flex-col gap-6">
-          <h2 class="hero-title text-[32px] md:text-[40px] font-[800] text-white tracking-tight" data-reveal>
-            Hey, I'm Kien.
-          </h2>
+      <section id="about" data-section="about" class="content-section hero-section">
+        <div class="hero-shell">
+          <h1 class="hero-title" data-reveal data-delay="30">
+            Building fast, reliable digital products.
+          </h1>
 
-          <p class="text-[var(--text-body)] leading-[1.9] text-[15px] max-w-2xl" data-reveal data-delay="50">
-            Full Stack Engineer focused on building scalable SaaS products, real-time systems, and AI-driven platforms.
-            Currently at CT UAV, where I develop distributed drone monitoring and swarm control systems with real-time communication architectures.
-            Previously at CHEK JSC, I helped build a multi-tenant business ecosystem from the ground up, covering backend infrastructure, frontend applications, and cloud deployment workflows.
+          <p class="hero-copy" data-reveal data-delay="70">
+            I'm Kien, a full-stack software engineer based in Ho Chi Minh City. I build scalable SaaS products, real-time systems, and AI-enabled platforms with a focus on reliability, maintainability, and product impact.
+            At CT UAV, I work on distributed drone monitoring and swarm-control systems powered by real-time communication architecture.
+            Previously at CHEK JSC, I helped build a multi-tenant business platform across backend services, frontend applications, and cloud deployment workflows.
             <br /><br />
-            I enjoy designing reliable systems, optimizing developer workflows, and turning complex technical problems into clean, maintainable products.
+            I enjoy turning complex engineering problems into clean systems that are practical to operate and easy to evolve.
           </p>
+
+          <div class="hero-actions" data-reveal data-delay="110">
+            <a href="#projects" class="hero-button hero-button-primary">
+              View projects
+              <ArrowRight size={16} />
+            </a>
+            <a href="mailto:hadinhkienn@gmail.com" class="hero-button hero-button-secondary">
+              <Mail size={16} />
+              Contact
+            </a>
+          </div>
         </div>
       </section>
 
       <hr class="section-divider" />
 
       <!-- ─── Section: Experience ──────────────────────── -->
-      <section id="experience" data-section="experience" class="content-section py-12 px-6 md:px-14 max-w-5xl mx-auto">
-        <div class="flex items-center gap-4 mb-12" data-reveal>
-          <span class="text-[10px] font-semibold text-[var(--accent)] tracking-[0.3em] uppercase">Experience</span>
-          <span class="h-px flex-1 bg-gradient-to-r from-[rgba(162,201,255,0.45)] to-transparent section-line"></span>
+      <section id="experience" data-section="experience" class="content-section section-block">
+        <div class="section-heading" data-reveal>
+          <h2 class="section-eyebrow">Experience</h2>
+          <span class="section-line"></span>
         </div>
 
-        <div class="space-y-12 border-l border-[var(--border)] ml-1.5">
+        <div class="timeline-list">
           {experiences.map((exp, index) => (
-              <div class="relative pl-6" data-reveal data-delay={index * 60}>
+              <div class="timeline-item" data-reveal data-delay={index * 60}>
                 <!-- Timeline dot -->
-                <div class={`absolute left-[-6px] top-[7px] w-[10px] h-[10px] rounded-full ${
+                <div class={`timeline-dot ${
                     exp.isCurrent
-                        ? 'bg-[var(--accent)] dot-accent-pulse'
-                        : 'bg-[var(--bg-surface)] border border-[var(--border)]'
+                        ? 'timeline-dot-current dot-accent-pulse'
+                        : 'timeline-dot-muted'
                 }`}></div>
 
-                <div class="text-[11px] text-[var(--muted-2)] font-mono mb-2 tracking-wider">
+                <div class="timeline-date">
                   {exp.startDate} — {exp.endDate}
                 </div>
 
-                <h4 class="text-[16px] text-white font-[700] mb-1 flex items-center gap-2">
+                <h3 class="timeline-title">
                   {exp.role}
                   {exp.isCurrent && (
-                      <span class="inline-flex items-center gap-1.5 text-[10px] font-semibold text-[var(--green-live)] bg-[rgba(74,222,128,0.08)] border border-[rgba(74,222,128,0.25)] rounded-full px-2 py-0.5">
-                    <span class="w-1.5 h-1.5 rounded-full bg-[var(--green-live)] dot-pulse inline-block"></span>
+                      <span class="current-badge">
+                    <span class="badge-dot dot-pulse" aria-hidden="true"></span>
                     Now
                   </span>
                   )}
-                </h4>
+                </h3>
 
-                <div class="text-[13px] text-[var(--accent)] opacity-90 mb-4 font-medium">{exp.company}</div>
+                <div class="timeline-company">{exp.company}</div>
 
-                <p class="text-[13px] text-[var(--text-body)] leading-[1.75] mb-4 max-w-2xl">{exp.description}</p>
+                <p class="timeline-description">{exp.description}</p>
 
-                <ul class="text-[13px] text-[var(--text-body)] space-y-2 mb-6 ml-4 list-disc marker:text-[var(--accent)] marker:opacity-70">
+                <ul class="timeline-highlights">
                   {exp.highlights.map(hl => (
-                      <li class="pl-1 leading-relaxed exp-item">{hl}</li>
+                      <li class="exp-item">{hl}</li>
                   ))}
                 </ul>
 
-                <div class="flex flex-wrap gap-2">
+                <div class="tag-list">
                   {exp.techStack.map(tech => (
-                      <span class="tech-tag tech-tag-accent font-mono text-[10px] bg-[rgba(162,201,255,0.08)] border border-[rgba(162,201,255,0.22)] text-[var(--accent)] rounded px-2 py-0.5 cursor-default">
+                      <span class="tech-tag tech-tag-accent">
                     {tech}
                   </span>
                   ))}
@@ -87,41 +101,41 @@ import { ExternalLink } from 'lucide-astro';
       <hr class="section-divider" />
 
       <!-- ─── Section: Projects ────────────────────────── -->
-      <section id="projects" data-section="projects" class="content-section py-12 px-6 md:px-14 max-w-5xl mx-auto">
-        <div class="flex items-center gap-4 mb-12" data-reveal>
-          <span class="text-[10px] font-semibold text-[var(--accent)] tracking-[0.3em] uppercase">Projects</span>
-          <span class="h-px flex-1 bg-gradient-to-r from-[rgba(162,201,255,0.45)] to-transparent section-line"></span>
+      <section id="projects" data-section="projects" class="content-section section-block">
+        <div class="section-heading" data-reveal>
+          <h2 class="section-eyebrow">Projects</h2>
+          <span class="section-line"></span>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div class="project-grid">
           {projects.map((project, index) => (
               <div
-                  class={`card-glow surface-panel group relative rounded-[14px] p-6 ${
+                  class={`portfolio-card project-card group ${
                       index < 2
-                          ? 'card-featured border-t-2 border-t-[var(--accent)]'
-                          : 'border-t border-t-[rgba(255,255,255,0.12)]'
+                          ? 'card-featured'
+                          : ''
                   }`}
                   data-reveal data-delay={index * 60}
               >
                 <!-- Top glow for featured cards -->
                 {index < 2 && (
-                    <div class="pointer-events-none absolute inset-x-0 top-0 h-24 rounded-t-[14px] bg-gradient-to-b from-[rgba(162,201,255,0.08)] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div class="card-top-glow" aria-hidden="true"></div>
                 )}
 
-                <div class="flex justify-between items-start mb-4">
-                  <h4 class="text-[var(--text)] font-[600] text-[15px] group-hover:text-white transition-colors duration-200">
+                <div class="card-title-row">
+                  <h3 class="card-title">
                     {project.title}
-                  </h4>
+                  </h3>
                   {(project.githubUrl || project.demoUrl) && (
-                      <ExternalLink size={14} class="text-[var(--muted-2)] group-hover:text-[var(--accent)] transition-colors duration-200 shrink-0 mt-0.5" />
+                      <ExternalLink size={14} class="card-link-icon" />
                   )}
                 </div>
 
-                <p class="text-[13px] text-[var(--text-body)] leading-[1.65] mb-6">{project.description}</p>
+                <p class="card-description">{project.description}</p>
 
-                <div class="flex flex-wrap gap-2 mt-auto">
+                <div class="tag-list mt-auto">
                   {project.techStack.map(tech => (
-                      <span class="tech-tag font-mono text-[10px] bg-[rgba(255,255,255,0.03)] border border-[var(--border)] text-[var(--muted)] rounded px-2 py-0.5 cursor-default">
+                      <span class="tech-tag">
                     {tech}
                   </span>
                   ))}
@@ -134,22 +148,22 @@ import { ExternalLink } from 'lucide-astro';
       <hr class="section-divider" />
 
       <!-- ─── Section: Skills ──────────────────────────── -->
-      <section id="skills" data-section="skills" class="content-section py-12 px-6 md:px-14 max-w-5xl mx-auto">
-        <div class="flex items-center gap-4 mb-12" data-reveal>
-          <span class="text-[10px] font-semibold text-[var(--accent)] tracking-[0.3em] uppercase">Skills</span>
-          <span class="h-px flex-1 bg-gradient-to-r from-[rgba(162,201,255,0.45)] to-transparent section-line"></span>
+      <section id="skills" data-section="skills" class="content-section section-block">
+        <div class="section-heading" data-reveal>
+          <h2 class="section-eyebrow">Skills</h2>
+          <span class="section-line"></span>
         </div>
 
-        <div class="space-y-8">
+        <div class="skills-list">
           {skillCategories.map((category, index) => (
-              <div class="grid md:grid-cols-[180px_1fr] gap-4 items-start" data-reveal data-delay={index * 50}>
-                <div class="text-[10px] uppercase tracking-widest text-[var(--muted-2)] font-semibold mt-1.5">
+              <div class="skill-row" data-reveal data-delay={index * 50}>
+                <div class="skill-category">
                   {category.category}
                 </div>
 
-                <div class="flex flex-wrap gap-2">
+                <div class="tag-list">
                   {category.skills.map(skill => (
-                      <span class="tech-tag border border-[var(--border)] bg-[rgba(255,255,255,0.03)] rounded px-2.5 py-1 text-[12px] text-[var(--muted)] cursor-default">
+                      <span class="tech-tag skill-tag">
                     {skill}
                   </span>
                   ))}
@@ -162,31 +176,31 @@ import { ExternalLink } from 'lucide-astro';
       <hr class="section-divider" />
 
       <!-- ─── Section: Education ───────────────────────── -->
-      <section id="education" data-section="education" class="content-section py-12 px-6 md:px-14 max-w-5xl mx-auto">
-        <div class="flex items-center gap-4 mb-12" data-reveal>
-          <span class="text-[10px] font-semibold text-[var(--accent)] tracking-[0.3em] uppercase">Education</span>
-          <span class="h-px flex-1 bg-gradient-to-r from-[rgba(162,201,255,0.45)] to-transparent section-line"></span>
+      <section id="education" data-section="education" class="content-section section-block">
+        <div class="section-heading" data-reveal>
+          <h2 class="section-eyebrow">Education</h2>
+          <span class="section-line"></span>
         </div>
 
-        <div class="grid md:grid-cols-2 gap-8">
+        <div class="education-grid">
           <!-- University card -->
           <div
-              class="card-glow card-featured surface-panel border-t-2 border-t-[var(--accent)] rounded-[14px] p-6"
+              class="portfolio-card card-featured"
               data-reveal
           >
-            <div class="text-[11px] text-[var(--muted-2)] font-mono mb-2 tracking-wider">Sep 2021 — Jun 2025</div>
-            <h4 class="text-white font-[600] text-[15px] mb-1">VNU-HCM University of Information Technology</h4>
-            <div class="text-[13px] text-[var(--accent)] opacity-90 mb-4">Bachelor of Information Technology</div>
+            <div class="card-meta">Sep 2021 — Jun 2025</div>
+            <h3 class="card-title">VNU-HCM University of Information Technology</h3>
+            <div class="card-subtitle">Bachelor of Information Technology</div>
 
-            <div class="inline-flex items-center gap-2 bg-[rgba(162,201,255,0.1)] border border-[rgba(162,201,255,0.26)] rounded px-3 py-1 mb-4">
-              <span class="text-[12px] text-[var(--text-body)]">GPA <span>8.38</span> / 10.0</span>
+            <div class="metric-pill">
+              <span>GPA <span class="metric-value">8.38</span> / 10.0</span>
             </div>
 
             <div>
-              <div class="text-[10px] uppercase tracking-widest text-[var(--muted-2)] font-semibold mb-3">Coursework</div>
-              <div class="flex flex-wrap gap-2">
+              <div class="mini-label">Coursework</div>
+              <div class="tag-list">
                 {['Operating Systems', 'Computer Networks', 'Data Structures & Algorithms', 'OOP', 'Web Development', 'Computer Systems'].map(course => (
-                    <span class="font-mono text-[10px] bg-[rgba(255,255,255,0.03)] border border-[var(--border)] text-[var(--muted)] rounded px-2 py-0.5">{course}</span>
+                    <span class="tech-tag">{course}</span>
                 ))}
               </div>
             </div>
@@ -194,20 +208,20 @@ import { ExternalLink } from 'lucide-astro';
 
           <!-- TOEIC card -->
           <div
-              class="card-glow surface-panel border-t border-t-[rgba(255,255,255,0.12)] rounded-[14px] p-6"
+              class="portfolio-card"
               data-reveal data-delay="60"
           >
-            <div class="text-[11px] text-[var(--muted-2)] font-mono mb-2">English Proficiency</div>
-            <h4 class="text-white font-[600] text-[15px] mb-1">TOEIC Certificate</h4>
+            <div class="card-meta">English Proficiency</div>
+            <h3 class="card-title">TOEIC Certificate</h3>
 
-            <div class="space-y-2 mt-4 text-[13px] text-[var(--text-body)]">
-              <div class="flex justify-between border-b border-[var(--border)] pb-2">
+            <div class="score-list">
+              <div class="score-row">
                 <span>Listening &amp; Reading</span>
-                <span class="text-white font-semibold">770</span>
+                <span>770</span>
               </div>
-              <div class="flex justify-between pt-1">
+              <div class="score-row">
                 <span>Speaking &amp; Writing</span>
-                <span class="text-white font-semibold">250</span>
+                <span>250</span>
               </div>
             </div>
           </div>
@@ -217,4 +231,3 @@ import { ExternalLink } from 'lucide-astro';
     </main>
   </div>
 </BaseLayout>
-
