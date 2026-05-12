@@ -1,26 +1,69 @@
 export function initScrollSpy() {
-  const sections = document.querySelectorAll('[data-section]');
-  const navItems = document.querySelectorAll('[data-nav]');
+  const sections = Array.from(document.querySelectorAll<HTMLElement>('[data-section]'));
+  const navItems = Array.from(document.querySelectorAll<HTMLElement>('[data-nav]'));
 
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const id = entry.target.getAttribute('data-section');
-          navItems.forEach(item => {
-            if (item.getAttribute('data-nav') === id) {
-              item.classList.add('active');
-            } else {
-              item.classList.remove('active');
-            }
-          });
-        }
-      });
-    },
-    { rootMargin: '-20% 0px -70% 0px', threshold: 0 }
-  );
+  function setActive(id: string | null) {
+    navItems.forEach(item => {
+      item.classList.toggle('active', item.getAttribute('data-nav') === id);
+    });
+  }
 
-  sections.forEach(s => observer.observe(s));
+  function updateActiveSection() {
+    const viewportHeight = window.innerHeight;
+    const documentHeight = Math.max(
+      document.body.scrollHeight,
+      document.documentElement.scrollHeight
+    );
+    const viewportBottom = window.scrollY + viewportHeight;
+
+    const hashTarget = sections.find(section => `#${section.id}` === window.location.hash);
+    if (hashTarget) {
+      const rect = hashTarget.getBoundingClientRect();
+      const isVisible = rect.bottom > 0 && rect.top < viewportHeight;
+
+      if (isVisible) {
+        setActive(hashTarget.getAttribute('data-section'));
+        return;
+      }
+    }
+
+    if (viewportBottom >= documentHeight - 8) {
+      setActive(sections.at(-1)?.getAttribute('data-section') ?? null);
+      return;
+    }
+
+    const activeSection = sections.reduce<{ section: HTMLElement; score: number } | null>((best, section) => {
+      const rect = section.getBoundingClientRect();
+      const visibleTop = Math.max(rect.top, 0);
+      const visibleBottom = Math.min(rect.bottom, viewportHeight);
+      const visibleHeight = Math.max(0, visibleBottom - visibleTop);
+
+      if (visibleHeight === 0) {
+        return best;
+      }
+
+      const topPriority = rect.top <= viewportHeight * 0.38 ? 1 : 0;
+      const score = visibleHeight + topPriority * viewportHeight * 0.25;
+
+      if (!best || score > best.score) {
+        return { section, score };
+      }
+
+      return best;
+    }, null);
+
+    setActive(activeSection?.section.getAttribute('data-section') ?? null);
+  }
+
+  navItems.forEach(item => {
+    item.addEventListener('click', () => {
+      setActive(item.getAttribute('data-nav'));
+    });
+  });
+
+  updateActiveSection();
+  window.addEventListener('scroll', updateActiveSection, { passive: true });
+  window.addEventListener('resize', updateActiveSection);
 }
 
 export function initScrollReveal() {
@@ -48,21 +91,35 @@ export function initMobileMenu() {
   const sidebar = document.getElementById('sidebar');
   const backdrop = document.getElementById('sidebar-backdrop');
   const closeBtns = document.querySelectorAll('.sidebar-close');
+  const desktopQuery = window.matchMedia('(min-width: 768px)');
 
   function openSidebar() {
-    sidebar?.classList.remove('-translate-x-full');
+    sidebar?.classList.add('is-open');
     backdrop?.classList.remove('hidden');
+    toggle?.setAttribute('aria-expanded', 'true');
     document.body.style.overflow = 'hidden';
   }
 
   function closeSidebar() {
-    sidebar?.classList.add('-translate-x-full');
+    sidebar?.classList.remove('is-open');
     backdrop?.classList.add('hidden');
+    toggle?.setAttribute('aria-expanded', 'false');
     document.body.style.overflow = '';
   }
 
-  toggle?.addEventListener('click', openSidebar);
+  toggle?.setAttribute('aria-expanded', 'false');
+  toggle?.addEventListener('click', () => {
+    if (sidebar?.classList.contains('is-open')) {
+      closeSidebar();
+    } else {
+      openSidebar();
+    }
+  });
   backdrop?.addEventListener('click', closeSidebar);
   closeBtns.forEach(btn => btn.addEventListener('click', closeSidebar));
+  desktopQuery.addEventListener('change', (event) => {
+    if (event.matches) {
+      closeSidebar();
+    }
+  });
 }
-
