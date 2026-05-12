@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://portfolio.dinhkien.id.vn/sitemap-index.xml

@@ -5,11 +5,34 @@ import { experiences } from '../data/experience';
 import { skillCategories } from '../data/skills';
 import { projects } from '../data/projects';
 import { ArrowRight, ExternalLink, Mail } from 'lucide-astro';
+
+const siteUrl = 'https://portfolio.dinhkien.id.vn';
+const pageTitle = 'Ha Dinh Kien | Full-Stack Software Engineer';
+const pageDescription = 'Full-stack software engineer in Ho Chi Minh City building scalable SaaS products, real-time systems, and AI-enabled web platforms.';
+const personJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Ha Dinh Kien',
+  jobTitle: 'Full-Stack Software Engineer',
+  url: siteUrl,
+  image: `${siteUrl}/avt.png`,
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Ho Chi Minh City',
+    addressCountry: 'VN'
+  },
+  sameAs: [
+    'https://github.com/hadinhkeinn',
+    'https://linkedin.com/in/hadinhkienn'
+  ]
+};
 ---
 
 <BaseLayout
-  title="Ha Dinh Kien | Full-Stack Software Engineer"
-  description="Portfolio of Ha Dinh Kien, a full-stack software engineer in Ho Chi Minh City building scalable SaaS products, real-time systems, and AI-enabled web platforms."
+  title={pageTitle}
+  description={pageDescription}
+  canonicalPath="/"
+  jsonLd={personJsonLd}
 >
   <div class="min-h-screen">
     <Sidebar />

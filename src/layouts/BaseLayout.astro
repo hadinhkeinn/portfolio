@@ -7,23 +7,47 @@ import '@fontsource/inter/800.css';
 interface Props {
   title: string;
   description?: string;
+  canonicalPath?: string;
+  jsonLd?: Record<string, unknown>;
 }
 
 const {
   title,
-  description = "Portfolio of Ha Dinh Kien, a full-stack software engineer building scalable SaaS products, real-time systems, and AI-enabled web platforms."
+  description = "Portfolio of Ha Dinh Kien, a full-stack software engineer building scalable SaaS products, real-time systems, and AI-enabled web platforms.",
+  canonicalPath = Astro.url.pathname,
+  jsonLd
 } = Astro.props;
+
+const siteUrl = 'https://portfolio.dinhkien.id.vn';
+const canonicalUrl = new URL(canonicalPath, siteUrl).toString();
 ---
 
 <!doctype html>
 <html lang="en" class="dark">
   <head>
     <meta charset="UTF-8" />
-    <meta name="description" content={description} />
     <meta name="viewport" content="width=device-width" />
-    <link rel="icon" href="/favicon.ico" />
     <meta name="generator" content={Astro.generator} />
+
     <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href={canonicalUrl} />
+    <link rel="icon" href="/favicon.ico" />
+
+    <meta property="og:type" content="profile" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:site_name" content="Ha Dinh Kien Portfolio" />
+
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+
+    {jsonLd && (
+      <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    )}
   </head>
   <body>
     <div class="cursor-glow" aria-hidden="true"></div>
