@@ -9,22 +9,27 @@ export interface Project {
 export const projects: Project[] = [
   {
     title: "Swarm UAV Dashboard",
-    description: "A real-time UAV fleet dashboard for monitoring telemetry, fire-detection streams, and geospatial carbon metrics. The system uses WebSockets for live updates and MQTT for efficient low-bandwidth messaging.",
-    techStack: ["FastAPI", "WebSockets", "MQTT", "MongoDB", "MapLibre", "Docker"]
+    description: "A real-time UAV swarm control and monitoring system with MAVLink telemetry, Redis Pub/Sub event delivery, FastAPI WebSocket broadcasts, fire-detection video analysis, and geospatial carbon-metrics maps.",
+    techStack: ["FastAPI", "MAVLink", "Redis Pub/Sub", "WebSockets", "MongoDB", "MapLibre", "Docker"]
   },
   {
-    title: "SaaS Business Platform",
-    description: "A multi-tenant SaaS platform for SMEs that brings CRM, CDP, loyalty, gamification, and workspace management into one product ecosystem.",
-    techStack: ["Django", "Next.js", "PostgreSQL", "Temporal", "Sentry"]
+    title: "Multi-Tenant SaaS Platform",
+    description: "A business platform covering workspace, CRM, CDP, campaigns, loyalty, gamification, tasks, VietQR payments, and tenant-aware cloud file workflows.",
+    techStack: ["Django REST Framework", "React", "TypeScript", "PostgreSQL", "AWS S3", "Cloudflare R2", "Sentry"]
+  },
+  {
+    title: "ClickHouse Loyalty Analytics",
+    description: "A leaderboard analytics layer for loyalty and gamification workflows, separating aggregation-heavy point-event queries from transactional storage.",
+    techStack: ["ClickHouse", "Django REST Framework", "Analytics", "REST API"]
+  },
+  {
+    title: "Local RAG Desktop Assistant",
+    description: "A local AI assistant for a Tauri desktop application with embeddings, vector search, contextual responses, and smoke checks for model and vector-store health.",
+    techStack: ["Tauri", "React", "TypeScript", "ONNX Runtime", "LanceDB", "Ollama"]
   },
   {
     title: "Agile ERP Module",
-    description: "A custom ERPNext module for sprint planning, backlog management, and Kanban scheduling, built to support clearer delivery workflows inside an internal ERP system.",
-    techStack: ["ERPNext", "Frappe", "Python", "JavaScript"]
-  },
-  {
-    title: "VietQR Payment Service",
-    description: "A QR-code payment service based on the Napas VietQR standard, designed for merchant payment flows and integration across tenant business workflows.",
-    techStack: ["Django", "REST API", "Cloudflare R2"]
+    description: "A custom ERPNext module for sprint planning, backlog management, Kanban scheduling, and task-code conventions for internal R&D delivery workflows.",
+    techStack: ["ERPNext", "Frappe Framework", "Python", "JavaScript"]
   }
 ];
