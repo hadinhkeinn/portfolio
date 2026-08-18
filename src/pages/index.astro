@@ -1,30 +1,32 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Sidebar from '../components/Sidebar.astro';
 import { experiences } from '../data/experience';
 import { skillCategories } from '../data/skills';
 import { projects } from '../data/projects';
-import { ArrowRight, ExternalLink, Mail } from 'lucide-astro';
+import { profile, stats } from '../data/profile';
+import { ArrowUpRight, Github, Linkedin, Mail, MapPin, Phone } from 'lucide-astro';
 
 const siteUrl = 'https://portfolio.dinhkien.id.vn';
-const pageTitle = 'Ha Dinh Kien | Full-Stack Software Engineer';
-const pageDescription = 'Full-stack software engineer in Ho Chi Minh City building scalable SaaS products, real-time systems, and AI-enabled web platforms.';
+const pageTitle = 'Ha Dinh Kien | Full Stack Engineer';
+const pageDescription = 'Full stack engineer in Ho Chi Minh City specializing in applied AI — production systems with Python, Django, FastAPI, React, and TypeScript, including RAG assistants and Model Context Protocol integrations.';
 const personJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Person',
-  name: 'Ha Dinh Kien',
-  jobTitle: 'Full-Stack Software Engineer',
+  name: profile.name,
+  jobTitle: 'Full Stack Engineer',
   url: siteUrl,
-  image: `${siteUrl}/avt.png`,
+  image: `${siteUrl}${profile.portrait}`,
+  email: `mailto:${profile.email}`,
   address: {
     '@type': 'PostalAddress',
     addressLocality: 'Ho Chi Minh City',
     addressCountry: 'VN'
   },
-  sameAs: [
-    'https://github.com/hadinhkeinn',
-    'https://linkedin.com/in/hadinhkienn'
-  ]
+  alumniOf: {
+    '@type': 'CollegeOrUniversity',
+    name: 'VNU-HCM University of Information Technology'
+  },
+  sameAs: [profile.github, profile.linkedin]
 };
 ---
 
@@ -34,223 +36,202 @@ const personJsonLd = {
   canonicalPath="/"
   jsonLd={personJsonLd}
 >
-  <div class="min-h-screen">
-    <Sidebar />
-    <main class="site-main min-h-screen md:pl-70 pb-16">
-
-      <!-- ─── Section: About ───────────────────────────── -->
-      <section id="about" data-section="about" class="content-section hero-section">
-        <div class="hero-shell">
-          <h1 class="hero-title" data-reveal data-delay="30">
-            Building fast, reliable digital products.
-          </h1>
-
-          <p class="hero-copy" data-reveal data-delay="70">
-            I'm Kien, a full-stack software engineer based in Ho Chi Minh City. I build scalable SaaS products, real-time systems, and AI-enabled platforms with a focus on reliability, maintainability, and product impact.
-            At CT UAV, I work on distributed drone monitoring and swarm-control systems powered by real-time communication architecture.
-            Previously at CHEK JSC, I helped build a multi-tenant business platform across backend services, frontend applications, and cloud deployment workflows.
-            <br /><br />
-            I enjoy turning complex engineering problems into clean systems that are practical to operate, easy to evolve, and useful in day-to-day product workflows.
-          </p>
-
-          <div class="hero-actions" data-reveal data-delay="110">
-            <a href="#projects" class="hero-button hero-button-primary">
-              View projects
-              <ArrowRight size={16} />
-            </a>
-            <a href="mailto:hadinhkienn@gmail.com" class="hero-button hero-button-secondary">
-              <Mail size={16} />
-              Contact
-            </a>
-          </div>
-        </div>
-      </section>
-
-      <hr class="section-divider" />
-
-      <!-- ─── Section: Experience ──────────────────────── -->
-      <section id="experience" data-section="experience" class="content-section section-block">
-        <div class="section-heading" data-reveal>
-          <h2 class="section-eyebrow">Experience</h2>
-          <span class="section-line"></span>
+  <!-- ─── Hero ─────────────────────────────────────────── -->
+  <header id="top" class="hero">
+    <div class="shell hero-inner">
+      <div class="hero-copy">
+        <div class="badge">
+          <span class="badge-dot" aria-hidden="true"></span>
+          {profile.status}
         </div>
 
-        <div class="timeline-list">
-          {experiences.map((exp, index) => (
-              <div class="timeline-item" data-reveal data-delay={index * 60}>
-                <!-- Timeline dot -->
-                <div class={`timeline-dot ${
-                    exp.isCurrent
-                        ? 'timeline-dot-current dot-accent-pulse'
-                        : 'timeline-dot-muted'
-                }`}></div>
+        <h1 class="hero-title">{profile.name}</h1>
+        <p class="hero-role">{profile.role}</p>
+        <p class="hero-bio">{profile.bio}</p>
 
-                <div class="timeline-date">
-                  {exp.startDate} — {exp.endDate}
-                </div>
-
-                <h3 class="timeline-title">
-                  {exp.role}
-                  {exp.isCurrent && (
-                      <span class="current-badge">
-                    <span class="badge-dot dot-pulse" aria-hidden="true"></span>
-                    Now
-                  </span>
-                  )}
-                </h3>
-
-                <div class="timeline-company">{exp.company}</div>
-
-                <p class="timeline-description">{exp.description}</p>
-
-                <ul class="timeline-highlights">
-                  {exp.highlights.map(hl => (
-                      <li class="exp-item">{hl}</li>
-                  ))}
-                </ul>
-
-                <div class="tag-list">
-                  {exp.techStack.map(tech => (
-                      <span class="tech-tag tech-tag-accent">
-                    {tech}
-                  </span>
-                  ))}
-                </div>
-              </div>
-          ))}
-        </div>
-      </section>
-
-      <hr class="section-divider" />
-
-      <!-- ─── Section: Projects ────────────────────────── -->
-      <section id="projects" data-section="projects" class="content-section section-block">
-        <div class="section-heading" data-reveal>
-          <h2 class="section-eyebrow">Projects</h2>
-          <span class="section-line"></span>
+        <div class="hero-actions">
+          <a href={`mailto:${profile.email}`} class="button button-primary">
+            <Mail size={15} />
+            Get in touch
+          </a>
+          <a href={profile.github} target="_blank" rel="noopener noreferrer" class="button button-secondary">
+            <Github size={15} />
+            GitHub
+          </a>
+          <a href={profile.linkedin} target="_blank" rel="noopener noreferrer" class="button button-secondary">
+            <Linkedin size={15} />
+            LinkedIn
+          </a>
         </div>
 
-        <div class="project-grid">
-          {projects.map((project, index) => (
-              <div
-                  class={`portfolio-card project-card group ${
-                      index < 2
-                          ? 'card-featured'
-                          : ''
-                  }`}
-                  data-reveal data-delay={index * 60}
-              >
-                <!-- Top glow for featured cards -->
-                {index < 2 && (
-                    <div class="card-top-glow" aria-hidden="true"></div>
-                )}
-
-                <div class="card-title-row">
-                  <h3 class="card-title">
-                    {project.title}
-                  </h3>
-                  {(project.githubUrl || project.demoUrl) && (
-                      <ExternalLink size={14} class="card-link-icon" />
-                  )}
-                </div>
-
-                <p class="card-description">{project.description}</p>
-
-                <div class="tag-list mt-auto">
-                  {project.techStack.map(tech => (
-                      <span class="tech-tag">
-                    {tech}
-                  </span>
-                  ))}
-                </div>
-              </div>
-          ))}
-        </div>
-      </section>
-
-      <hr class="section-divider" />
-
-      <!-- ─── Section: Skills ──────────────────────────── -->
-      <section id="skills" data-section="skills" class="content-section section-block">
-        <div class="section-heading" data-reveal>
-          <h2 class="section-eyebrow">Skills</h2>
-          <span class="section-line"></span>
-        </div>
-
-        <div class="skills-list">
-          {skillCategories.map((category, index) => (
-              <div class="skill-row" data-reveal data-delay={index * 50}>
-                <div class="skill-category">
-                  {category.category}
-                </div>
-
-                <div class="tag-list">
-                  {category.skills.map(skill => (
-                      <span class="tech-tag skill-tag">
-                    {skill}
-                  </span>
-                  ))}
-                </div>
-              </div>
-          ))}
-        </div>
-      </section>
-
-      <hr class="section-divider" />
-
-      <!-- ─── Section: Education ───────────────────────── -->
-      <section id="education" data-section="education" class="content-section section-block">
-        <div class="section-heading" data-reveal>
-          <h2 class="section-eyebrow">Education</h2>
-          <span class="section-line"></span>
-        </div>
-
-        <div class="education-grid">
-          <!-- University card -->
-          <div
-              class="portfolio-card card-featured"
-              data-reveal
-          >
-            <div class="card-meta">Sep 2021 — Jun 2025</div>
-            <h3 class="card-title">VNU-HCM University of Information Technology</h3>
-            <div class="card-subtitle">Bachelor of Information Technology</div>
-
-            <div class="metric-pill">
-              <span>GPA <span class="metric-value">8.38</span> / 10.0</span>
-            </div>
-
+        <div class="stat-row">
+          {stats.map(stat => (
             <div>
-              <div class="mini-label">Coursework</div>
-              <div class="tag-list">
-                {['Operating Systems', 'Computer Networks', 'Data Structures & Algorithms', 'OOP', 'Web Development', 'Computer Systems'].map(course => (
-                    <span class="tech-tag">{course}</span>
-                ))}
-              </div>
+              <p class="stat-value">{stat.value}</p>
+              <p class="stat-label">{stat.label}</p>
             </div>
+          ))}
+        </div>
+
+        <div class="meta-row">
+          <span class="meta-item"><MapPin size={13} />{profile.location}</span>
+          <span class="meta-item"><Phone size={13} />{profile.phone}</span>
+          <span class="meta-item"><Mail size={13} />{profile.email}</span>
+        </div>
+      </div>
+
+      <div style="flex-shrink: 0;">
+        <img
+          src={profile.portrait}
+          alt={profile.name}
+          width="720"
+          height="1047"
+          class="hero-portrait"
+        />
+      </div>
+    </div>
+  </header>
+
+  <!-- ─── 01 Experience ────────────────────────────────── -->
+  <section id="experience" data-section="experience" class="section">
+    <div class="shell section-inner" style="padding-bottom: 24px;">
+      <p class="section-eyebrow">01 — Experience</p>
+      <h2 class="section-title">Where I've worked</h2>
+      <p class="section-lead">
+        Applied-AI and platform engineering across multi-tenant SaaS and real-time UAV systems.
+      </p>
+
+      {experiences.map((exp, index) => (
+        <div class="entry-row" data-reveal data-delay={index * 60}>
+          <div class="entry-aside">
+            <p class="entry-date">{exp.startDate} — {exp.endDate}</p>
+            <p class="entry-place">{exp.location}</p>
           </div>
 
-          <!-- TOEIC card -->
-          <div
-              class="portfolio-card"
-              data-reveal data-delay="60"
-          >
-            <div class="card-meta">English Proficiency</div>
-            <h3 class="card-title">TOEIC Certificate</h3>
+          <div class="entry-body">
+            <h3 class="entry-title">
+              {exp.role}
+              <span class="entry-org"> · {exp.company}</span>
+            </h3>
+            {exp.note && <p class="entry-note">{exp.note}</p>}
 
-            <div class="score-list">
-              <div class="score-row">
-                <span>Listening &amp; Reading</span>
-                <span>770</span>
-              </div>
-              <div class="score-row">
-                <span>Speaking &amp; Writing</span>
-                <span>250</span>
-              </div>
+            <div class="bullet-list">
+              {exp.highlights.map(highlight => (
+                <div class="bullet"><span>{highlight}</span></div>
+              ))}
+            </div>
+
+            <div class="chip-row">
+              {exp.techStack.map(tech => (
+                <span class="chip chip-mono">{tech}</span>
+              ))}
             </div>
           </div>
         </div>
-      </section>
+      ))}
+    </div>
+  </section>
 
-    </main>
-  </div>
+  <!-- ─── 02 Projects ──────────────────────────────────── -->
+  <section id="projects" data-section="projects" class="section">
+    <div class="shell section-inner">
+      <p class="section-eyebrow">02 — Projects</p>
+      <h2 class="section-title">Selected work</h2>
+      <p class="section-lead">
+        Systems I designed and shipped end to end, from retrieval pipelines to real-time telemetry.
+      </p>
+
+      <div class="project-grid">
+        {projects.map((project, index) => (
+          <article class="card" data-reveal data-delay={index * 50}>
+            <h3 class="card-title">{project.title}</h3>
+            <p class="card-body">{project.description}</p>
+            <div class="chip-row">
+              {project.techStack.map(tech => (
+                <span class="chip chip-mono">{tech}</span>
+              ))}
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── 03 Skills ────────────────────────────────────── -->
+  <section id="skills" data-section="skills" class="section">
+    <div class="shell section-inner">
+      <p class="section-eyebrow">03 — Skills</p>
+      <h2 class="section-title">Technical toolkit</h2>
+      <p class="section-lead">The stack I reach for when building and operating production systems.</p>
+
+      <div class="skill-grid">
+        {skillCategories.map((category, index) => (
+          <div class="skill-card" data-reveal data-delay={index * 40}>
+            <p class="skill-card-title">{category.category}</p>
+            <div class="chip-row">
+              {category.skills.map(skill => (
+                <span class="chip">{skill}</span>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── 04 Education ─────────────────────────────────── -->
+  <section id="education" data-section="education" class="section">
+    <div class="shell section-inner">
+      <p class="section-eyebrow">04 — Education</p>
+      <h2 class="section-title">Background</h2>
+
+      <div class="entry-row" data-reveal>
+        <div class="entry-aside">
+          <p class="entry-date">Sep 2021 — Jun 2025</p>
+          <p class="entry-place">Ho Chi Minh City</p>
+        </div>
+        <div class="entry-body">
+          <h3 class="entry-title">
+            VNU-HCM University of Information Technology
+            <span class="entry-org"> · Information Technology</span>
+          </h3>
+          <div class="bullet-list">
+            <div class="bullet"><span><strong>Cumulative GPA</strong> — 8.38 / 10.0</span></div>
+            <div class="bullet"><span>Coursework across operating systems, computer networks, data structures and algorithms, OOP, and web development.</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="entry-row" data-reveal data-delay="60">
+        <div class="entry-aside">
+          <p class="entry-date">Languages</p>
+          <p class="entry-place">English</p>
+        </div>
+        <div class="entry-body">
+          <h3 class="entry-title">TOEIC</h3>
+          <div class="score-list" style="margin-top: 16px;">
+            <div class="score-row"><span>Listening &amp; Reading</span><span>770</span></div>
+            <div class="score-row"><span>Speaking &amp; Writing</span><span>250</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── 05 Contact ───────────────────────────────────── -->
+  <section id="contact" data-section="contact" class="section">
+    <div class="shell contact-inner">
+      <p class="section-eyebrow">05 — Contact</p>
+      <h2 class="contact-title">Let's build something together.</h2>
+      <p class="contact-lead">
+        I'm open to full stack and applied-AI roles, and to interesting collaborations. My inbox is always open.
+      </p>
+      <div class="contact-actions">
+        <a href={`mailto:${profile.email}`} class="button button-primary">
+          {profile.email}
+          <ArrowUpRight size={14} />
+        </a>
+      </div>
+    </div>
+  </section>
 </BaseLayout>

@@ -1,8 +1,11 @@
 ---
 import '../styles/global.css';
-import '@fontsource/inter/400.css';
-import '@fontsource/inter/700.css';
-import '@fontsource/inter/800.css';
+import '@fontsource/geist-sans/400.css';
+import '@fontsource/geist-sans/500.css';
+import '@fontsource/geist-sans/600.css';
+import '@fontsource/geist-mono/400.css';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
 
 interface Props {
   title: string;
@@ -15,10 +18,10 @@ interface Props {
 
 const {
   title,
-  description = "Portfolio of Ha Dinh Kien, a full-stack software engineer building scalable SaaS products, real-time systems, and AI-enabled web platforms.",
+  description = "Portfolio of Ha Dinh Kien, a full stack engineer specializing in applied AI — RAG assistants, Model Context Protocol integrations, and production systems in Python, Django, FastAPI, React, and TypeScript.",
   canonicalPath = Astro.url.pathname,
   ogImagePath = '/og.png',
-  ogImageAlt = 'Ha Dinh Kien, Full-Stack Software Engineer portfolio preview',
+  ogImageAlt = 'Ha Dinh Kien, Full Stack Engineer portfolio preview',
   jsonLd
 } = Astro.props;
 
@@ -28,7 +31,7 @@ const ogImageUrl = new URL(ogImagePath, siteUrl).toString();
 ---
 
 <!doctype html>
-<html lang="en" class="dark">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
@@ -39,6 +42,8 @@ const ogImageUrl = new URL(ogImagePath, siteUrl).toString();
     <meta name="robots" content="index, follow" />
     <link rel="canonical" href={canonicalUrl} />
     <link rel="icon" href="/favicon.ico" />
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#09090b" media="(prefers-color-scheme: dark)" />
 
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
@@ -57,36 +62,42 @@ const ogImageUrl = new URL(ogImagePath, siteUrl).toString();
     <meta name="twitter:image:alt" content={ogImageAlt} />
 
     {jsonLd && (
-      <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+      <script type="application/ld+json" is:inline set:html={JSON.stringify(jsonLd)} />
     )}
+
+    <!-- Resolve the theme before first paint so the page never flashes. -->
+    <script is:inline>
+      (() => {
+        const stored = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (stored === 'dark' || (!stored && prefersDark)) {
+          document.documentElement.classList.add('dark');
+        }
+      })();
+    </script>
   </head>
   <body>
-    <div class="cursor-glow" aria-hidden="true"></div>
-    <slot />
+    <Nav />
+    <main id="content">
+      <slot />
+    </main>
+    <Footer />
+
     <script>
-      import { initScrollReveal, initScrollSpy, initMobileMenu } from '../scripts/scrollReveal';
-      document.addEventListener('DOMContentLoaded', () => {
+      import { initScrollReveal, initScrollSpy, initNavMenu, initThemeToggle } from '../scripts/site';
+
+      const start = () => {
+        initThemeToggle();
         initScrollReveal();
         initScrollSpy();
-        initMobileMenu();
+        initNavMenu();
+      };
 
-        const glow = document.querySelector<HTMLElement>('.cursor-glow');
-        if (glow) {
-          const moveGlow = (point: { clientX: number; clientY: number }) => {
-            glow.style.left = `${point.clientX}px`;
-            glow.style.top = `${point.clientY}px`;
-          };
-
-          window.addEventListener('mousemove', (event: MouseEvent) => {
-            moveGlow(event);
-          });
-          window.addEventListener('touchmove', (event: TouchEvent) => {
-            if (event.touches && event.touches[0]) {
-              moveGlow(event.touches[0]);
-            }
-          }, { passive: true });
-        }
-      });
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', start);
+      } else {
+        start();
+      }
     </script>
   </body>
 </html>

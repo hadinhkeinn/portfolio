@@ -1,0 +1,41 @@
+---
+import { Menu, Moon, Sun } from 'lucide-astro';
+import { navItems, profile } from '../data/profile';
+---
+
+<nav class="site-nav" aria-label="Primary navigation">
+  <div class="shell nav-inner">
+    <a href="#top" class="nav-brand">{profile.name}</a>
+
+    <div style="display: flex; align-items: center; gap: 4px;">
+      <ul class="nav-links" id="nav-links">
+        {navItems.map(item => (
+          <li>
+            <a href={`#${item.id}`} data-nav={item.id} class="nav-link">{item.label}</a>
+          </li>
+        ))}
+      </ul>
+
+      <button
+        type="button"
+        id="theme-toggle"
+        class="icon-button theme-toggle"
+        aria-label="Toggle theme"
+      >
+        <Sun size={16} class="icon-sun" />
+        <Moon size={16} class="icon-moon" />
+      </button>
+
+      <button
+        type="button"
+        id="nav-menu-toggle"
+        class="icon-button nav-menu-button theme-toggle"
+        aria-label="Open navigation menu"
+        aria-controls="nav-links"
+        aria-expanded="false"
+      >
+        <Menu size={16} />
+      </button>
+    </div>
+  </div>
+</nav>

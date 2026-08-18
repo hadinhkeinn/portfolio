@@ -1,11 +1,11 @@
 # Astro Portfolio
 
-A minimal, fast portfolio site built with Astro, Tailwind CSS, and a clean sidebar layout.
+A minimal, fast portfolio site built with Astro, Tailwind CSS, and a shadcn-style single-column layout.
 
 ## Features
 
 - Data-driven sections for experience, projects, skills, and education
-- Sticky sidebar navigation with section highlighting
+- Sticky top navigation with section highlighting and a light/dark theme toggle
 - Subtle background effects (dot grid + cursor glow)
 - Responsive layout optimized for desktop and mobile
 
@@ -22,7 +22,7 @@ A minimal, fast portfolio site built with Astro, Tailwind CSS, and a clean sideb
 .
 ├── public/
 ├── src/
-│   ├── components/        # UI components (sidebar, etc.)
+│   ├── components/        # UI components (nav, footer)
 │   ├── data/              # Content data (experience, projects, skills)
 │   ├── layouts/           # Base layout
 │   ├── pages/             # Routes
@@ -50,7 +50,7 @@ npm run preview
 ## Customize Content
 
 - Update sections in `src/pages/index.astro`
-- Edit sidebar details and social links in `src/components/Sidebar.astro`
+- Edit identity, stats, and social links in `src/data/profile.ts`
 - Update data sources in `src/data/*.ts`
 - Adjust theme tokens and global styles in `src/styles/global.css`
 

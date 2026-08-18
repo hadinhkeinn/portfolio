@@ -6,11 +6,11 @@ export interface SkillCategory {
 export const skillCategories: SkillCategory[] = [
   {
     category: "Languages",
-    skills: ["Python", "TypeScript", "JavaScript", "Java", "C/C++"]
+    skills: ["Python", "TypeScript", "JavaScript", "C#"]
   },
   {
     category: "Backend",
-    skills: ["Django REST Framework", "FastAPI", "Node.js", "RESTful APIs", "WebSockets", "Redis Pub/Sub"]
+    skills: ["Django REST Framework", "FastAPI", ".NET", "RESTful APIs", "WebSockets", "Temporal"]
   },
   {
     category: "Frontend",
@@ -18,18 +18,18 @@ export const skillCategories: SkillCategory[] = [
   },
   {
     category: "Databases",
-    skills: ["Cassandra", "ScyllaDB", "ClickHouse", "PostgreSQL", "MongoDB", "MySQL"]
+    skills: ["ScyllaDB", "Cassandra", "PostgreSQL", "ClickHouse", "Redis", "MongoDB", "MySQL", "Typesense"]
   },
   {
-    category: "AI & Local AI",
+    category: "AI",
     skills: ["RAG", "Vector Search", "Embeddings", "ONNX Runtime", "LanceDB", "Ollama"]
   },
   {
     category: "Cloud & DevOps",
-    skills: ["AWS S3", "Cloudflare R2", "Cloudflare Turnstile", "Docker", "Git", "CI/CD"]
+    skills: ["AWS S3", "Cloudflare R2", "Docker", "Git", "CI/CD"]
   },
   {
     category: "Platforms & Tools",
-    skills: ["Tauri", "ERPNext", "Frappe Framework", "MAVLink", "Sentry"]
+    skills: ["Tauri", "MAVLink"]
   }
 ];

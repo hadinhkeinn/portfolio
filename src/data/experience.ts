@@ -3,7 +3,9 @@ export interface ExperienceEntry {
   role: string;
   startDate: string;
   endDate: string;
+  location: string;
   isCurrent: boolean;
+  note?: string;
   description: string;
   highlights: string[];
   techStack: string[];
@@ -11,37 +13,39 @@ export interface ExperienceEntry {
 
 export const experiences: ExperienceEntry[] = [
   {
-    company: "CT UAV",
-    role: "Junior Full-Stack Engineer",
-    startDate: "Jan 2026",
+    company: "CHEK JSC",
+    role: "Fullstack Engineer",
+    startDate: "Oct 2024",
     endDate: "Present",
+    location: "Ho Chi Minh City",
     isCurrent: true,
-    description: "Building backend services, internal ERP workflows, and real-time interfaces for UAV swarm control, monitoring, and field-data analysis.",
+    note: "Transitioned to part-time from Jan 2026",
+    description: "Building applied-AI features and platform services for a multi-tenant SaaS product spanning CRM, HRM, CDP, campaigns, loyalty, and gamification.",
     highlights: [
-      "Built an asynchronous FastAPI gateway to coordinate UAV swarm operations and expose unified MAVLink telemetry interfaces",
-      "Integrated Redis Pub/Sub with FastAPI WebSocket broadcasting to deliver UAV telemetry and system events to connected monitoring clients",
-      "Processed geospatial carbon-metrics data from MongoDB into .pmtiles to improve MapLibre rendering performance",
-      "Integrated real-time UAV video streams with an AI fire-detection flow for backend-side field-data analysis",
-      "Containerized the application ecosystem with Docker to keep development and production environments consistent",
-      "Developed ERPNext and Frappe sprint, backlog, Kanban, and task-code workflows for internal R&D planning"
+      "Designed and shipped a local RAG assistant for the Tauri desktop app end to end, building the embedding and vector-index pipeline with ONNX Runtime and LanceDB and integrating Ollama for contextual generation behind the React UI",
+      "Implemented an MCP extension exposing HRM and CRM operations as callable tools for AI agents on the .NET platform",
+      "Owned a ranking and leaderboard system backed by ClickHouse end to end, designing an analytical schema and pre-aggregation strategy for high-volume point events, enforcing per-tenant isolation, and delivering ranked results to real-time dashboards",
+      "Orchestrated automated multi-tenant provisioning with Temporal workflows, coordinating tenant creation, entity setup, domain and portal registration, and admin assignment into a single auditable, retryable lifecycle",
+      "Built a centralized, multi-scope search engine on Typesense with a search-agnostic integration layer, enabling consistent querying across CRM, HRM, inventory, and collaboration modules while enforcing strict tenant and global scope isolation",
+      "Developed backend and frontend features across the multi-tenant SaaS platform, spanning workspace, CRM, CDP, campaigns, loyalty, gamification, and task management modules"
     ],
-    techStack: ["FastAPI", "Redis Pub/Sub", "WebSockets", "MongoDB", "MapLibre", "Docker", "MAVLink", "ERPNext", "Frappe Framework", "Python"]
+    techStack: ["Django REST Framework", ".NET", "React", "TypeScript", "MCP", "ONNX Runtime", "LanceDB", "Ollama", "ClickHouse", "Temporal", "Typesense"]
   },
   {
-    company: "CHEK JSC",
-    role: "Full-Stack Developer",
-    startDate: "Oct 2024",
-    endDate: "Dec 2025",
+    company: "CT UAV",
+    role: "Fullstack Engineer",
+    startDate: "Jan 2026",
+    endDate: "June 2026",
+    location: "Ho Chi Minh City",
     isCurrent: false,
-    description: "Built and maintained a multi-tenant SaaS platform spanning CRM, CDP, campaigns, loyalty, gamification, payments, cloud storage, and local AI workflows.",
+    note: "Swarm UAV Control & Monitoring System",
+    description: "Delivered the backend and real-time data layer for a swarm UAV control and monitoring system used for live field operations.",
     highlights: [
-      "Built features across workspace, CRM, CDP, campaigns, loyalty, gamification, and task-management workflows",
-      "Implemented Napas VietQR QR-code generation for bank transfers and merchant payment flows",
-      "Designed ClickHouse-backed leaderboard analytics for high-volume loyalty point events, ranking, and user performance tracking",
-      "Developed a cloud-backed drive service using AWS S3 and Cloudflare R2 with file metadata, access control, and delivery",
-      "Integrated Cloudflare Turnstile and Sentry to improve bot protection, error visibility, and operational debugging",
-      "Delivered a local RAG AI assistant for a Tauri desktop app using ONNX Runtime, LanceDB, Ollama, React, and TypeScript"
+      "Connected live UAV video feeds to an AI fire detection pipeline, enabling automated analysis of field footage on the backend",
+      "Built an asynchronous FastAPI gateway coordinating UAV swarm operations and exposing unified interfaces for MAVLink telemetry",
+      "Architected a real-time telemetry pipeline using Redis Pub/Sub to fan out UAV telemetry and system events to FastAPI WebSocket broadcasters, delivering live updates to connected monitoring clients",
+      "Optimized the geospatial data processing pipeline that feeds the map layer, reducing rendering overhead and improving the responsiveness of real-time field monitoring"
     ],
-    techStack: ["Django REST Framework", "React", "TypeScript", "ClickHouse", "AWS S3", "Cloudflare R2", "Cloudflare Turnstile", "Sentry", "ONNX Runtime", "LanceDB", "Ollama"]
+    techStack: ["FastAPI", "MAVLink", "Redis Pub/Sub", "WebSockets", "MongoDB", "MapLibre", "Python", "Docker"]
   }
 ];

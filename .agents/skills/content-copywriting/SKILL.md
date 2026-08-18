@@ -1,6 +1,6 @@
 # Content Copywriting
 
-Use this skill for portfolio biography, experience bullets, project descriptions, skills, education, and sidebar copy.
+Use this skill for portfolio biography, experience bullets, project descriptions, skills, education, and profile copy.
 
 ## Content Locations
 
@@ -8,7 +8,7 @@ Use this skill for portfolio biography, experience bullets, project descriptions
 - Experience entries: `src/data/experience.ts`
 - Project entries: `src/data/projects.ts`
 - Skills: `src/data/skills.ts`
-- Sidebar identity and links: `src/components/Sidebar.astro`
+- Identity, stats, contact details, and nav labels: `src/data/profile.ts`
 
 ## Guidelines
 
